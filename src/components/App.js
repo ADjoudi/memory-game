@@ -1,5 +1,5 @@
 import "../css/App.css";
-
+import React, { useState, useEffect } from "react";
 function App() {
   const cards = [];
   for (let i = 1; i <= 8; i++) {
@@ -15,20 +15,8 @@ function App() {
     );
   }
   //TO-DO: make this a state and apply dynamic changes to it.
-  const score = (
-    <img
-      id="currentScore"
-      src={require("../assets/nbr/" + 0 + ".png")}
-      alt={"0"}
-    />
-  );
-  const bestScore = (
-    <img
-      id="bestScore"
-      src={require("../assets/nbr/" + 0 + ".png")}
-      alt={"0"}
-    />
-  );
+  const [score, setScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
 
   return (
     <div className="App">
@@ -38,11 +26,19 @@ function App() {
       <div className="board">{cards}</div>
       <div className="score">
         <img src={require("../assets/SCORE.png")} alt="score" />
-        {score}
+        <img
+          id="currentScore"
+          src={require("../assets/nbr/" + score + ".png")}
+          alt={score}
+        />
         <div className="bestScore">
           <img src={require("../assets/best.png")} alt="best score" />
           {/* placeholder */}
-          {bestScore}
+          <img
+            id="bestScore"
+            src={require("../assets/nbr/" + bestScore + ".png")}
+            alt={bestScore}
+          />
         </div>
       </div>
     </div>
