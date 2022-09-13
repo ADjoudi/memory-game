@@ -1,0 +1,52 @@
+.App {
+  height: 100vh;
+  background-color: rgba(2, 60, 17, 0.4);
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "board score";
+  grid-template-rows: 10rem max-content;
+  grid-template-columns: max-content 1fr;
+  gap: 2rem;
+  padding: 2rem 4rem;
+  overflow: auto;
+}
+
+.App > header {
+  grid-area: header;
+}
+.App .board {
+  grid-area: board;
+  display: grid;
+  grid-template-areas:
+    "1 2 3 4"
+    "5 6 7 8";
+  gap: 42px;
+}
+.board img {
+  width: 12rem;
+  height: auto;
+}
+.App .score {
+  align-self: center;
+  justify-self: center;
+  grid-area: score;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+  justify-content: start;
+}
+.score .bestScore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 4rem;
+}
+.bestScore > img {
+  width: 14.625rem;
+}
+.bestScore #bestScore {
+  width: 2rem;
+}
