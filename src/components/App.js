@@ -20,11 +20,7 @@ const App = () => {
   useEffect(() => {}, [order]);
   function shuffleOrder(order) {
     let orderArray = order;
-    // orderArray.sort(() => 0.5 - Math.random());
-    for (let i = orderArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random(Math.random() * orderArray.length));
-      [orderArray[i], orderArray[j]] = [orderArray[j], orderArray[i]];
-    }
+    orderArray.sort(() => 0.5 - Math.random());
     return orderArray;
   }
   function handleCardClick(event) {
