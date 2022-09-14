@@ -7,17 +7,15 @@ const App = () => {
   const [bestScore, setBestScore] = useState(0);
   const [order, setOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   const [log, setLog] = useState([]);
+  const [winMessage, setWinMessage] = useState("winHidden");
   useEffect(() => {
     if (score >= bestScore) setBestScore(score);
     if (score === 8) {
-      console.log("you win!");
+      setWinMessage("winVisible");
       setBestScore(score);
-      setLog([]);
-      setScore(0);
     }
   }, [score, bestScore]);
-  useEffect(() => {}, [log]);
-  useEffect(() => {}, [order]);
+
   function shuffleOrder(order) {
     let orderArray = order;
     orderArray.sort(() => 0.5 - Math.random());
@@ -39,9 +37,17 @@ const App = () => {
     let newOrder = shuffleOrder(order);
     setOrder([...newOrder]);
   }
+  function handleWinMessageClick() {
+    setLog([]);
+    setScore(0);
+    setWinMessage("winHidden");
+  }
 
   return (
     <div className="App">
+      <div className={winMessage} onClick={handleWinMessageClick}>
+        <img src={require("../assets/youWin.png")} alt="you win!" />
+      </div>
       <header>
         <img src={require("../assets/logo.png")} alt="Memory Game" />
       </header>
