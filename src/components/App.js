@@ -1,29 +1,59 @@
 import "../css/App.css";
 import React, { useState, useEffect } from "react";
-function App() {
-  const cards = [];
-  for (let i = 1; i <= 8; i++) {
-    let gridStyle = "gridArea: " + i;
-    cards.push(
-      <img
-        key={i}
-        id={"card" + i}
-        src={require("../assets/card/" + i + ".jpg")}
-        alt={i}
-        style={{ gridStyle }}
-      />
-    );
-  }
-  //TO-DO: make this a state and apply dynamic changes to it.
+import Board from "./Board";
+
+const App = () => {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [order, setOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [log, setLog] = useState([]);
+  useEffect(() => {
+    if (score >= bestScore) setBestScore(score);
+    if (score === 8) {
+      console.log("you win!");
+      setBestScore(score);
+      setLog([]);
+      setScore(0);
+    }
+  }, [score, bestScore]);
+  useEffect(() => {}, [log]);
+  useEffect(() => {}, [order]);
+  function shuffleOrder(order) {
+    let orderArray = order;
+    // orderArray.sort(() => 0.5 - Math.random());
+    for (let i = orderArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random(Math.random() * orderArray.length));
+      [orderArray[i], orderArray[j]] = [orderArray[j], orderArray[i]];
+    }
+    return orderArray;
+  }
+  function handleCardClick(event) {
+    let pickedCard = event.target.getAttribute("alt");
+    if (log.includes(pickedCard)) {
+      setLog([]);
+      setScore(0);
+      console.log("you lost");
+    } else {
+      setLog([...log, pickedCard]);
+      setScore(score + 1);
+    }
+    if (score >= bestScore) {
+      setBestScore(score);
+    }
+    let newOrder = shuffleOrder(order);
+    setOrder([...newOrder]);
+  }
 
   return (
     <div className="App">
       <header>
         <img src={require("../assets/logo.png")} alt="Memory Game" />
       </header>
-      <div className="board">{cards}</div>
+      <Board
+        className="board"
+        handleCardClick={handleCardClick}
+        order={order}
+      />
       <div className="score">
         <img src={require("../assets/SCORE.png")} alt="score" />
         <img
@@ -43,6 +73,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
 
 export default App;
