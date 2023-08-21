@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
-
-export default function Board(props) {
+export default function Board({ className, order, handleCardClick }) {
   return (
-    <div className={props.className}>
-      {props.order.map((position, i) => (
+    <div className={className}>
+      {order.map((position, i) => (
         <img
           key={i}
-          alt={i + 1}
-          id={"card" + i}
-          src={require("../assets/card/" + (i + 1) + ".jpg")}
-          className={"p" + position}
-          onClick={props.handleCardClick}
+          alt={position}
+          src={require("../assets/card/" + position + ".jpg")}
+          onClick={handleCardClick}
         />
       ))}
     </div>

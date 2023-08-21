@@ -8,18 +8,10 @@ const App = () => {
   const [order, setOrder] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   const [log, setLog] = useState([]);
   const [winMessage, setWinMessage] = useState("winHidden");
-  useEffect(() => {
-    if (score >= bestScore) setBestScore(score);
-    if (score === 8) {
-      setWinMessage("winVisible");
-      setBestScore(score);
-    }
-  }, [score, bestScore]);
 
   function shuffleOrder(order) {
-    let orderArray = order;
-    orderArray.sort(() => 0.5 - Math.random());
-    return orderArray;
+    let orderArray = [...order];
+    return orderArray.sort(() => Math.random() - 0.5);
   }
   function handleCardClick(event) {
     let pickedCard = event.target.getAttribute("alt");
@@ -28,7 +20,7 @@ const App = () => {
       setScore(0);
       console.log("you lost");
     } else {
-      setLog([...log, pickedCard]);
+      setLog((prevLog) => [...prevLog, pickedCard]);
       setScore(score + 1);
     }
     if (score >= bestScore) {
@@ -37,6 +29,13 @@ const App = () => {
     let newOrder = shuffleOrder(order);
     setOrder([...newOrder]);
   }
+  useEffect(() => {
+    if (score >= bestScore) setBestScore(score);
+    if (score === 8) {
+      setWinMessage("winVisible");
+      setBestScore(score);
+    }
+  }, [score, bestScore]);
   function handleWinMessageClick() {
     setLog([]);
     setScore(0);
